@@ -5,28 +5,35 @@
 
 <h1>Product Catalog</h1>
 
+<a asp-action="Add">Add Product</a>
+
+<p>
+    @TempData["Message"]
+</p>
+
 <div class="table-responsive"></div>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(m => m.Title)</th>
                 <th>@Html.DisplayNameFor(m => m.Price)</th>
-                <th>@Html.DisplayNameFor(m => m.Category)</th>
+                <th>@Html.DisplayNameFor(m => m.Category)</th> 
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach(Product p in Model)
+            <!--This is in place to display the Product's information-->
+            @foreach (Product p in Model)
             {
-            <tr>
-                <td>@p.Title</td>
-                <td>@Html.DisplayFor(m => p.Price)</td>
-                <td>@p.Category</td>
-                <td>
-                    <a class="btn btn-secondary" href="">Edit</a>
-                    <a class="btn btn-danger" href="">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>@p.Title</td>
+                    <td>@Html.DisplayFor(m => p.Price)</td>
+                    <td>@p.Category</td>
+                    <td>
+                        <a class="btn btn-secondary" href="">Edit</a>
+                        <a class="btn btn-danger" href="">Delete</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
