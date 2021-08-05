@@ -3,21 +3,37 @@
     ViewData["Title"] = "Porduct Catalog";
 }
 
-<h1>Product Catalog</h1>
+<link href="/css/Catalog.css" rel="stylesheet" />
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Product Catalog</h1>
+</div>
 
 <div class="table-responsive"></div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(m => m.Title)</th>
-                <th>@Html.DisplayNameFor(m => m.Price)</th>
-                <th>@Html.DisplayNameFor(m => m.Category)</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(Product p in Model)
-            {
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.Title)</th>
+            <th>@Html.DisplayNameFor(m => m.Price)</th>
+            <th>@Html.DisplayNameFor(m => m.Category)</th>
+            <th><a class="btn btn-success btn-sm" asp-action="Add">Add Product</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--This is in place to display the Product's information-->
+        @foreach (Product p in Model)
+        {
             <tr>
                 <td>@p.Title</td>
                 <td>@Html.DisplayFor(m => p.Price)</td>
@@ -27,6 +43,6 @@
                     <a class="btn btn-danger" href="">Delete</a>
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
