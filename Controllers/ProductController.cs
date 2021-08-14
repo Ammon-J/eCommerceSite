@@ -26,6 +26,7 @@ namespace eCommerceSite.Controllers
         {
             int pageNum = id ?? 1;
             const int pageSize = 3;
+
             ViewData["CurrentPage"] = pageNum;
 
             // Get all products form the db
@@ -33,7 +34,6 @@ namespace eCommerceSite.Controllers
                 await (from p in _context.Products
                 orderby p.Title ascending
                  select p).Skip(pageSize * (pageNum - 1)).Take(pageSize).ToListAsync();
-
             int numProducts = await (from p in _context.Products
                                      select p).CountAsync();
 
