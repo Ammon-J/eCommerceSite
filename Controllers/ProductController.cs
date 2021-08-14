@@ -88,6 +88,7 @@ namespace eCommerceSite.Controllers
             return View(p);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             Product p =
@@ -96,6 +97,24 @@ namespace eCommerceSite.Controllers
                        select prod).SingleAsync();
 
             return View(p);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int ProductId)
+        {
+            Product p =
+                await (from prod in _context.Products
+                       where prod.ProductId == ProductId
+                       select prod).SingleAsync();
+
+            _context.Entry(p).State = EntityState.Deleted;
+
+            await _context.SaveChangesAsync();
+
+            TempData["Deleted"] = $"{p.Title} was deleted";
+
+            return RedirectToAction("Index");
         }
     }
 }
