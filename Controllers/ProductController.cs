@@ -29,17 +29,15 @@ namespace eCommerceSite.Controllers
 
             ViewData["CurrentPage"] = pageNum;
 
-            // Get all products form the db
-            List<Product> products =
-                await (from p in _context.Products
-                orderby p.Title ascending
-                 select p).Skip(pageSize * (pageNum - 1)).Take(pageSize).ToListAsync();
-            int numProducts = await (from p in _context.Products
-                                     select p).CountAsync();
-
+            // Get the number of products form the db
+            int numProducts = await ProductDB.GetTotalProductsAync(_context);
+            // Devide the number of products by the desired amount of products to see on one page
             int totalPages = (int)Math.Ceiling((double)numProducts / pageSize);
 
             ViewData["MaxPage"] = totalPages;
+
+            // Get the list of products
+            List<Product> products = await ProductDB.GetProductsAsync(_context, pageSize, pageNum);
 
             // Send the list of products to the view to be displayed
             return View(products);
@@ -59,8 +57,7 @@ namespace eCommerceSite.Controllers
             if(ModelState.IsValid)
             {
                 // Add the entered product info to the database
-                _context.Products.Add(p);
-                await _context.SaveChangesAsync();
+                await ProductDB.AddProductAsync(_context, p);
                 // Holy cow that was easy! I can do this all day
 
                 // TempData will not get deleted when you redirect to another page.
