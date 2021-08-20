@@ -46,5 +46,10 @@ namespace eCommerceSite.Controllers
 
             return View(reg);
         }
+
+        public async Task<IActionResult> Login()
+        {
+            return View();
+        }
     }
 }
