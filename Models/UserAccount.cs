@@ -20,7 +20,7 @@ namespace eCommerceSite.Models
         public DateTime? DateOfBirth { get; set; }
     }
 
-    public class RegisterViewdel
+    public class RegisterViewModel
     {
         [Required]
         [EmailAddress]
@@ -48,5 +48,9 @@ namespace eCommerceSite.Models
         // This will only show the date and not the time
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string Username { get; set; }
     }
 }
