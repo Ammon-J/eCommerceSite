@@ -67,6 +67,8 @@ namespace eCommerceSite.Controllers
                 await _context.UserAccounts.AddAsync(acc);
                 await _context.SaveChangesAsync();
 
+                LogUserIn(acc.UserId);
+
                 // Redirect to homepage if everything is valid
                 return RedirectToAction("Index", "Home");
             }
@@ -88,19 +90,19 @@ namespace eCommerceSite.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if(!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
                 return View();
             }
             // Gets the mathing account from the db
             UserAccount acc =
                 await (from u in _context.UserAccounts
-                 where (u.Username == model.UsernameOrEmail
-                     || u.Email == model.UsernameOrEmail)
-                     && u.Password == model.Password
-                 select u).SingleOrDefaultAsync();
+                       where (u.Username == model.UsernameOrEmail
+                           || u.Email == model.UsernameOrEmail)
+                           && u.Password == model.Password
+                       select u).SingleOrDefaultAsync();
 
-            if(acc == null)
+            if (acc == null)
             {
                 // Custom error message
                 ModelState.AddModelError(string.Empty, "Account was not found with the given Username and Password");
@@ -109,11 +111,16 @@ namespace eCommerceSite.Controllers
                 return View(model);
             }
 
-            // Login 
-            // Create a session for the user
-            HttpContext.Session.SetInt32("UserId", acc.UserId);
+            LogUserIn(acc.UserId);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void LogUserIn(int accountId)
+        {
+            // Login 
+            // Create a session for the user
+            HttpContext.Session.SetInt32("UserId", accountId);
         }
 
         public IActionResult Logout()
