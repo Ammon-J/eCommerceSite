@@ -25,12 +25,12 @@ namespace eCommerceSite.Controllers
         public async Task<IActionResult> Add(int id) // This is the is to add to the cart
         {
             // Cookie key
-            const string CartCookie = "CartCooke";
+            const string cartCookie = "CartCookie";
 
             Product p = await ProductDB.GetProductAsync(_context, id);
 
             // Get existing cart items
-            string existingItems = _httpContext.HttpContext.Request.Cookies[CartCookie];
+            string existingItems = _httpContext.HttpContext.Request.Cookies[cartCookie];
 
             List<Product> cartProducts = new List<Product>();
             if(existingItems != null)
@@ -53,7 +53,7 @@ namespace eCommerceSite.Controllers
                 IsEssential = true
             };
 
-            _httpContext.HttpContext.Response.Cookies.Append(CartCookie, data, options);
+            _httpContext.HttpContext.Response.Cookies.Append(cartCookie, data, options);
 
             return RedirectToAction("Index", "Product");
         }
@@ -61,7 +61,10 @@ namespace eCommerceSite.Controllers
         public IActionResult Summary()
         {
             // Display all the products in the shopping cart
-            return View();
+            string cookieData = _httpContext.HttpContext.Request.Cookies["CartCookie"];
+
+            List<Product> cartProducts = JsonConvert.DeserializeObject<List<Product>>(cookieData);
+            return View(cartProducts);
         }
     }
 }
