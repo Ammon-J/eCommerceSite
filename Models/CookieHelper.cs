@@ -11,8 +11,9 @@ namespace eCommerceSite.Models
     public static class CookieHelper
     {
 
-        // Cookie key
+        // Cookie key for accessing the cookie
         const string cartCookie = "CartCookie";
+
         /// <summary>
         /// Returns the current list of products
         /// </summary>
@@ -34,6 +35,7 @@ namespace eCommerceSite.Models
             return cartProducts;
         }
 
+        // Add product to cart
         public static void addProductToCart(Product p, IHttpContextAccessor http)
         {
             List<Product> cartProducts = GetCartProducts(http);
@@ -52,6 +54,7 @@ namespace eCommerceSite.Models
             http.HttpContext.Response.Cookies.Append(cartCookie, data, options);
         }
 
+        // How many items are in the cart?
         public static int GetNumberOfCartItems(IHttpContextAccessor http)
         {
             List<Product> cartProducts = GetCartProducts(http);

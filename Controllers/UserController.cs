@@ -47,7 +47,7 @@ namespace eCommerceSite.Controllers
                                            where account.Username == reg.Username
                                            select account).AnyAsync();
 
-                // If email or username is taken add custom error and send back to ciew
+                // If email or username is taken add custom error and send back to view
                 if (isUsernameTaken)
                 {
                     ModelState.AddModelError(nameof(RegisterViewModel.Username), "That username is already in use");

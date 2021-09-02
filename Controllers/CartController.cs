@@ -22,6 +22,7 @@ namespace eCommerceSite.Controllers
             _httpContext = httpContext;
         }
 
+        // Add the selected item to the cart
         public async Task<IActionResult> Add(int id, string prevUrl) // This is the is to add to the cart
         {
             Product p = await ProductDB.GetProductAsync(_context, id);
