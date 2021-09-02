@@ -28,6 +28,8 @@ namespace eCommerceSite.Controllers
 
             CookieHelper.addProductToCart(p, _httpContext);
 
+            TempData["Message"] = p.Title + " added successfully!";
+
             return RedirectToAction("Index", "Product");
         }
 
