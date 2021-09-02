@@ -54,7 +54,8 @@ namespace eCommerceSite.Models
 
         public static int GetNumberOfCartItems(IHttpContextAccessor http)
         {
-
+            List<Product> cartProducts = GetCartProducts(http);
+            return cartProducts.Count;
         }
     }
 }
