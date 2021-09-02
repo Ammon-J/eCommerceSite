@@ -22,7 +22,7 @@ namespace eCommerceSite.Controllers
             _httpContext = httpContext;
         }
 
-        public async Task<IActionResult> Add(int id) // This is the is to add to the cart
+        public async Task<IActionResult> Add(int id, string prevUrl) // This is the is to add to the cart
         {
             Product p = await ProductDB.GetProductAsync(_context, id);
 
@@ -30,7 +30,7 @@ namespace eCommerceSite.Controllers
 
             TempData["Message"] = p.Title + " added successfully!";
 
-            return RedirectToAction("Index", "Product");
+            return Redirect(prevUrl);
         }
 
         public IActionResult Summary()
